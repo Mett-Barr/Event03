@@ -1,0 +1,60 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryDark">@color/primaryDarkColor</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+
+
+<!--        true時，status bar變透明且跑到Activity的前景，會擋住畫面-->
+<!--        所以這邊設定false-->
+        <item name="android:windowTranslucentNavigation">false</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">true</item>
+
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+<!--        <item name="android:windowLightNavigationBar">true</item>-->
+    </style>
+
+
+
+    <style name="BottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/BottomSheetStyle</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">?android:colorBackground</item>
+        <item name="android:navigationBarDividerColor">?android:colorBackground</item>
+    </style>
+
+    <style name="BottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    
+    
+    
+    <style name="BottomSheetDialogCircle" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/BottomSheetDialogWrapper</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">?android:colorBackground</item>
+        <item name="android:navigationBarDividerColor">?android:colorBackground</item>
+
+        <item name="android:enforceStatusBarContrast">false</item>
+        <item name="android:enforceNavigationBarContrast">false</item>
+    </style>
+    
+    <style name="BottomSheetDialogWrapper" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+
+
+    <style name="BottomDialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/dialog_bottom_up</item>
+        <item name="android:windowExitAnimation">@anim/dialog_bottom_down</item>
+    </style>
+
+</resources>
