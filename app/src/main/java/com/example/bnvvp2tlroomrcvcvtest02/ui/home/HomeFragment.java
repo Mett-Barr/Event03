@@ -31,6 +31,8 @@ import static android.content.ContentValues.TAG;
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
 
+    BottomDialogFragment bdf = new BottomDialogFragment();
+
     DateAndPosition dap = new DateAndPosition();
     String week;
     ViewPager2 viewPager2;
@@ -96,6 +98,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         );
         tabLayoutMediator.attach();
 
+        bdf = new BottomDialogFragment();
+
         Log.d(TAG, "onCreateView: ");
         return root;
     }
@@ -149,10 +153,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 //                bottomSheetDialog.show();
 //                Toast.makeText(getActivity(), "Click!", Toast.LENGTH_SHORT).show();
 
-                BottomDialogFragment bdf = new BottomDialogFragment();
-                bdf.show(getActivity().getSupportFragmentManager(), "4");
                 bdf.mPagerAdapterDay = mPagerAdapterDay;
                 bdf.position = viewPager2.getCurrentItem();
+                bdf.show(getActivity().getSupportFragmentManager(), "4");
                 break;
 
             case R.id.fab2:

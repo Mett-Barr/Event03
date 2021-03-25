@@ -1,6 +1,5 @@
 package com.example.bnvvp2tlroomrcvcvtest02;
 
-import android.animation.ObjectAnimator;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -23,7 +22,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.bnvvp2tlroomrcvcvtest02.room.DB_r;
 import com.example.bnvvp2tlroomrcvcvtest02.room.EventEntity;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -38,7 +36,7 @@ public class BottomDialogFragment extends BottomSheetDialogFragment implements V
     TextInputEditText starting_time, starting_date, ending_time, ending_date;
     EditText event, category;
     Button save, test;
-    int testnum = 1;
+    int test_num = 1;
 
     TimePicker mTimePicker;
     DatePicker mDatePicker;
@@ -63,9 +61,9 @@ public class BottomDialogFragment extends BottomSheetDialogFragment implements V
         window.getDecorView().setPadding(0, 0, 0, 0);
         WindowManager.LayoutParams lp = window.getAttributes();
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
 
-        lp.gravity = Gravity.BOTTOM;
+//        lp.gravity = Gravity.BOTTOM;
 
         lp.windowAnimations = R.style.BottomDialogAnimation;
         window.setAttributes(lp);
@@ -104,7 +102,6 @@ public class BottomDialogFragment extends BottomSheetDialogFragment implements V
         mDatePicker = v.findViewById(R.id.DatePicker);
 //        mDatePicker.setVisibility(View.GONE);
     }
-
 
     private void setOnClickListener() {
         starting_time.setOnClickListener(this);
@@ -199,21 +196,21 @@ public class BottomDialogFragment extends BottomSheetDialogFragment implements V
                 break;
 
             case R.id.test:
-                switch (testnum) {
+                switch (test_num) {
                     case 1:
                         constraintLayoutText.setVisibility(View.GONE);
                         mTimePicker.setVisibility(View.VISIBLE);
-                        testnum = 2;
+                        test_num = 2;
                         break;
                     case 2:
                         mTimePicker.setVisibility(View.GONE);
                         mDatePicker.setVisibility(View.VISIBLE);
-                        testnum = 3;
+                        test_num = 3;
                         break;
                     case 3:
                         mDatePicker.setVisibility(View.GONE);
                         constraintLayoutText.setVisibility(View.VISIBLE);
-                        testnum = 1;
+                        test_num = 1;
                         break;
                 }
         }
@@ -266,4 +263,3 @@ public class BottomDialogFragment extends BottomSheetDialogFragment implements V
     }
 
 }
-
