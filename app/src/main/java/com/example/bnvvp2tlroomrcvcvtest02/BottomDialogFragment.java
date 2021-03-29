@@ -1,9 +1,11 @@
 package com.example.bnvvp2tlroomrcvcvtest02;
 
+import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.transition.TransitionManager;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +15,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -22,13 +25,24 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.bnvvp2tlroomrcvcvtest02.room.DB_r;
 import com.example.bnvvp2tlroomrcvcvtest02.room.EventEntity;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.Calendar;
 import java.util.Objects;
 
+import static android.content.ContentValues.TAG;
+
 public class BottomDialogFragment extends BottomSheetDialogFragment implements View.OnClickListener {
+
+    Window window;
+    WindowManager.LayoutParams layoutParams;
+    Dialog dialog;
+
+    private BottomSheetBehavior<View> behavior;
+    private int topOffset = 0;
 
     ConstraintLayout vg;
     ConstraintLayout mConstraintLayout;
@@ -51,35 +65,133 @@ public class BottomDialogFragment extends BottomSheetDialogFragment implements V
 
     Calendar start, end;
 
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        this.getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
-        Window window = this.getDialog().getWindow();
+//    @NonNull
+//    @Override
+//    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+//        if (getContext() == null) {
+//            return super.onCreateDialog(savedInstanceState);
+//        }
+//        return new BottomSheetDialog(getContext(), R.style.BottomSheetDialogTheme);
+//    }
+//
+//    @Override
+//    public void onStart() {
+//        super.onStart();
+//        // 设置软键盘不自动弹出
+//        getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+//        BottomSheetDialog dialog = (BottomSheetDialog) getDialog();
+//        FrameLayout bottomSheet = dialog.getDelegate().findViewById(android.support.design.R.id.design_bottom_sheet);
+//        if (bottomSheet != null) {
+//            CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) bottomSheet.getLayoutParams();
+//            layoutParams.height = getHeight();
+//            behavior = BottomSheetBehavior.from(bottomSheet);
+//            // 初始为展开状态
+//            behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+//        }
+//    }
+//
+//    private int getHeight() {
+//        int height = 1920;
+//        if (getContext() != null) {
+//            WindowManager wm = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
+//            Point point = new Point();
+//            if (wm != null) {
+//                // 使用Point已经减去了状态栏高度
+//                wm.getDefaultDisplay().getSize(point);
+//                height = point.y - getTopOffset();
+//            }
+//        }
+//        return height;
+//    }
+//
+//    public int getTopOffset() {
+//        return topOffset;
+//    }
+//    public void setTopOffset(int topOffset) {
+//        this.topOffset = topOffset;
+//    }
+//    public BottomSheetBehavior<FrameLayout> getBehavior() {
+//        return behavior;
+//    }
 
-        assert window != null;
-        window.getDecorView().setPadding(0, 0, 0, 0);
-        WindowManager.LayoutParams lp = window.getAttributes();
-        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-
-//        lp.gravity = Gravity.BOTTOM;
-
-        lp.windowAnimations = R.style.BottomDialogAnimation;
-        window.setAttributes(lp);
-        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        final View view = inflater.inflate(R.layout.new_event, null);
-        uiInit(view);
-        setOnClickListener();
-        varInit();
-        return view;
-    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setStyle(STYLE_NO_TITLE, R.style.BottomSheetDialogTheme);
+//        behavior=BottomSheetBehavior.from(getDialog().findViewById(R.id.design_bottom_sheet));
+//        behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        Log.d(TAG, "onCreate: ");
+    }
+
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+        Log.d(TAG, "onCreateDialog: ");
+        return super.onCreateDialog(savedInstanceState);
+    }
+
+    @Nullable
+    @Override
+    public Dialog getDialog() {
+        Log.d(TAG, "getDialog: ");
+        return super.getDialog();
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.new_event, null);
+
+        dialog = this.getDialog();
+
+//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        assert dialog != null;
+        window = dialog.getWindow();
+
+        assert window != null;
+        window.getDecorView().setPadding(16, 0, 16, 0);
+        layoutParams = window.getAttributes();
+
+//        layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
+//        layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
+//
+//        layoutParams.gravity = Gravity.BOTTOM;
+
+        layoutParams.windowAnimations = R.style.BottomDialogAnimation;
+        window.setAttributes(layoutParams);
+
+        //style裡面設定過所以先註解掉
+//        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        Log.d(TAG, "onCreateView: time");
+        init(view);
+        Log.d(TAG, "onCreateView: return view");
+
+        view.post(new Runnable() {
+            @Override
+            public void run() {
+                //R.id.design_bottom_sheet基本是固定的,不用担心后面API的更改
+                behavior=BottomSheetBehavior.from(getDialog().findViewById(R.id.design_bottom_sheet));
+                behavior.setHideable(false);//此处设置表示禁止BottomSheetBehavior的执行
+            }
+        });
+
+        test_num = 1;
+        return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.d(TAG, "onStart: ");
+    }
+
+    private void init(View v) {
+        uiInit(v);
+        setOnClickListener();
+        varInit();
     }
 
     private void uiInit(View v) {
@@ -141,7 +253,6 @@ public class BottomDialogFragment extends BottomSheetDialogFragment implements V
 //                        c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE), false).show();
                 break;
 
-
             case R.id.starting_date:
                 pickDate();
 //                new DatePickerDialog(requireContext(), new DatePickerDialog.OnDateSetListener() {
@@ -155,7 +266,6 @@ public class BottomDialogFragment extends BottomSheetDialogFragment implements V
 //                },
 //                        c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH)).show();
                 break;
-
 
             case R.id.ending_time:
 //                new TimePickerDialog(requireContext(), new TimePickerDialog.OnTimeSetListener() {
@@ -201,19 +311,32 @@ public class BottomDialogFragment extends BottomSheetDialogFragment implements V
                         constraintLayoutText.setVisibility(View.GONE);
                         mTimePicker.setVisibility(View.VISIBLE);
                         test_num = 2;
+
+//                        test();
                         break;
                     case 2:
                         mTimePicker.setVisibility(View.GONE);
                         mDatePicker.setVisibility(View.VISIBLE);
                         test_num = 3;
+
+//                        test();
                         break;
                     case 3:
                         mDatePicker.setVisibility(View.GONE);
                         constraintLayoutText.setVisibility(View.VISIBLE);
                         test_num = 1;
+
+//                        test();
                         break;
                 }
         }
+    }
+
+    void test() {
+//        layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
+//        window.setAttributes(layoutParams);
+//        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//        window.getDecorView().setPadding(16, 0, 16, 0);
     }
 
     private void pickTime() {

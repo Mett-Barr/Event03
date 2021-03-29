@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bnvvp2tlroomrcvcvtest02.room.DB_r;
 import com.example.bnvvp2tlroomrcvcvtest02.room.EventEntity;
+import com.google.android.material.card.MaterialCardView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -33,11 +34,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     // you provide access to all the views for a data item in a view holder
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         // each data item is just a string in this case
-        public CardView cardView;
+        public MaterialCardView cardView;
         public TextView textView;
         public Button button;
 
-        public MyViewHolder(CardView v) {
+        public MyViewHolder(MaterialCardView v) {
             super(v);
             cardView = v;
             cardView.setOnClickListener(this);
@@ -86,7 +87,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public RecyclerViewAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent,
                                                                int viewType) {
         // create a new view
-        CardView v = (CardView) LayoutInflater.from(parent.getContext())
+        MaterialCardView v = (MaterialCardView) LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item, parent, false);
         return new MyViewHolder(v);
     }
