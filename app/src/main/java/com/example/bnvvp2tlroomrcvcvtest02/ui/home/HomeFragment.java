@@ -155,7 +155,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
                 bdf.mPagerAdapterDay = mPagerAdapterDay;
                 bdf.position = viewPager2.getCurrentItem();
-                bdf.show(getActivity().getSupportFragmentManager(), "4");
+                bdf.show(getActivity().getSupportFragmentManager(), "tag");
+                Log.d(TAG, "onClick: Click");
                 break;
 
             case R.id.fab2:
